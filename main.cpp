@@ -11,12 +11,26 @@ class EchoServer {
       auto bytes_transferred = co_await asio::async_read_until(socket, asio::dynamic_buffer(buffer), "\r\n", asio::use_awaitable);
       auto message = buffer.substr(0, bytes_transferred - 2); // Strip \r\n at end of buffer
       cout << "Server: received: " << message << endl;
-      if (message == "exit") {
-        cout << "Server: closing connection" << endl;
-        // Connection is closed when socket is destroyed
+
+      istringstream request_stream(buffer);
+      string method, path, version;
+      request_stream >> method >> path >> version;
+
+      if (method != "GET") {
         co_return;
       }
-      bytes_transferred = co_await asio::async_write(socket, asio::buffer(buffer), asio::use_awaitable);
+
+      string response;
+      if (path == "/") {
+        response = "HTTP/1.1 200 OK \r\nContent-Type: text/html\r\n\Content-Length: 19\r\n\r\n<h1>Homepage</h1>";
+      } else if (path == "/page1") {
+        response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 18\r\n\r\n<h1>Page 1</h1>";
+      } else if (path == "/page2") {
+        response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 18\r\n\r\n<h1>Page 2</h1>";
+      }
+
+
+      bytes_transferred = co_await asio::async_write(socket, asio::buffer(response), asio::use_awaitable);
       cout << "Server: sent: " << message << endl;
     }
   }
@@ -51,7 +65,7 @@ public:
     co_await asio::async_connect(socket, results, asio::use_awaitable);
     cout << "Client: connected" << endl;
 
-    std::string message("hello");
+    std::string message("GET / HTTP/1.1");
     auto bytes_transferred = co_await asio::async_write(socket, asio::buffer(message + "\r\n"), asio::use_awaitable);
     cout << "Client: sent: " << message << endl;
 
