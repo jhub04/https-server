@@ -27,11 +27,13 @@ class EchoServer {
         response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 18\r\n\r\n<h1>Page 1</h1>";
       } else if (path == "/page2") {
         response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 18\r\n\r\n<h1>Page 2</h1>";
+      } else {
+        response = "HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\nContent-Length: 30\r\n\r\n<h1>404 - Page Not Found</h1>";
       }
 
 
       bytes_transferred = co_await asio::async_write(socket, asio::buffer(response), asio::use_awaitable);
-      cout << "Server: sent: " << message << endl;
+      cout << "Server: sent: " << response << endl;
     }
   }
 
