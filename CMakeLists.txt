@@ -7,4 +7,4 @@ if(APPLE)
     include_directories(/usr/local/include /opt/homebrew/include)
 endif()
 
-add_executable(https_server main.cpp)
+add_executable(https_server main.cpp HttpServer.cpp HttpServer.h)
