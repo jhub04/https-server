@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "https_server"
+			"path" : "main"
 		}
 	],
 	"backtrace" : 1,
@@ -11,6 +11,7 @@
 		"commands" : 
 		[
 			"add_executable",
+			"target_link_libraries",
 			"include_directories"
 		],
 		"files" : 
@@ -25,11 +26,17 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 10,
+				"line" : 11,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
+				"file" : 0,
+				"line" : 12,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
 				"file" : 0,
 				"line" : 7,
 				"parent" : 0
@@ -48,12 +55,17 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 2,
+					"backtrace" : 3,
 					"path" : "/usr/local/include"
 				},
 				{
-					"backtrace" : 2,
+					"backtrace" : 3,
 					"path" : "/opt/homebrew/include"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/opt/homebrew/Cellar/openssl@3/3.4.0/include"
 				}
 			],
 			"language" : "CXX",
@@ -64,7 +76,7 @@
 			]
 		}
 	],
-	"id" : "https_server::@6890427a1f51a3e7e1df",
+	"id" : "main::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -76,12 +88,22 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/opt/homebrew/Cellar/openssl@3/3.4.0/lib/libssl.dylib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/opt/homebrew/Cellar/openssl@3/3.4.0/lib/libcrypto.dylib",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
-	"name" : "https_server",
-	"nameOnDisk" : "https_server",
+	"name" : "main",
+	"nameOnDisk" : "main",
 	"paths" : 
 	{
 		"build" : ".",
